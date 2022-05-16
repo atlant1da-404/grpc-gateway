@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package notes;
+
+option go_package = "../../gen/notes/";
+
+import "google/api/annotations.proto";
+
+// the request contains the id of note
+message NotesRequest {
+  uint64 id = 1;
+}
+
+// the response returns the name by id of note
+message NotesResponse {
+  string name = 1;
+  string color = 2;
+  int32 count = 3;
+}
+
+
+service Notes {
+  rpc GetNote(NotesRequest) returns (NotesResponse) {
+    option (google.api.http) = {
+      get: "/get/{id}"
+    };
+  }
+}
