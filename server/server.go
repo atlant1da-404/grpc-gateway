@@ -18,20 +18,20 @@ const (
 
 func main() {
 
-	addressOne, addressTwo := config.LoadSocketConfig()
-	if addressOne == "" && addressTwo == "" {
-		addressOne = "localhost:8080"
-		addressTwo = "localhost:8081"
+	socketOne, socketTwo := config.LoadSocketConfig()
+	if socketOne == "" && socketTwo == "" {
+		socketOne = "localhost:8080"
+		socketTwo = "localhost:8081"
 	}
 
 	go func() {
 
 		mux := runtime.NewServeMux()
 		notes.RegisterNotesHandlerServer(context.Background(), mux, handler.NewNotes())
-		log.Fatalln(http.ListenAndServe(addressOne, mux))
+		log.Fatalln(http.ListenAndServe(socketOne, mux))
 	}()
 
-	listener, err := net.Listen(method, addressTwo)
+	listener, err := net.Listen(method, socketTwo)
 	if err != nil {
 		log.Fatalln(err.Error())
 	}
