@@ -18,11 +18,28 @@ message NotesResponse {
   int32 count = 3;
 }
 
+message NotedCreateRequest {
+  string name = 1;
+  string color = 2;
+  int32 count = 3;
+}
+
+message NotedCreateResponse {
+  string result = 1;
+}
+
 
 service Notes {
   rpc GetNote(NotesRequest) returns (NotesResponse) {
     option (google.api.http) = {
       get: "/get/{id}"
+    };
+  }
+
+  rpc CreateNote(NotedCreateRequest) returns (NotedCreateResponse) {
+    option (google.api.http) = {
+      post: "/post"
+      body: "*"
     };
   }
 }
