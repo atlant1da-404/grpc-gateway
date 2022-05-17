@@ -28,3 +28,15 @@ func (s *Notes) CreateNote(ctx context.Context, in *notes.NotedCreateRequest) (*
 	result, err := s.notesService.CreateNote(in)
 	return result, err
 }
+
+func (s *Notes) UpdateNote(ctx context.Context, in *notes.NoteUpdateRequest) (*notes.NoteUpdateResponse, error) {
+
+	result, err := s.notesService.UpdateNote(in)
+	return result, err
+}
+
+func (s *Notes) DeleteNote(ctx context.Context, in *notes.NoteDeleteRequest) (*notes.NoteDeleteResponse, error) {
+
+	result, err := s.notesService.DeleteNote(in)
+	return result, err
+}
