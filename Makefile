@@ -13,3 +13,6 @@ run:
 # Run redis in docker
 redis:
 	docker run --name rdb -p 6379:6379 redis
+
+redis-cli:
+	 docker exec -it rdb redis-cli
