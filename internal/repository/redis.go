@@ -31,7 +31,7 @@ func NewRedis(socket string) {
 }
 
 // this is implementation to get the last note id
-func countToInt() int {
+func lastNoteId() int {
 
 	count, err := rdb.Get(ctx, "count").Result()
 	if err != nil {
@@ -43,9 +43,10 @@ func countToInt() int {
 	return currentId
 }
 
-func incrementCounter() int {
+// to increment when add a new entity
+func incrementNoteId() int {
 
-	count := countToInt()
+	count := lastNoteId()
 
 	_, err := rdb.Set(ctx, "count", count+1, 0).Result()
 	if err != nil {
