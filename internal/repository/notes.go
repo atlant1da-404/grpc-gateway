@@ -8,6 +8,7 @@ import (
 
 type NotesRepository interface {
 	GetNotes(id uint64) (*notes.NotesResponse, error)
+	CreateNote(in *notes.NotedCreateRequest) (*notes.NotedCreateResponse, error)
 }
 
 type notesRepository struct {
@@ -33,4 +34,24 @@ func (n *notesRepository) GetNotes(id uint64) (*notes.NotesResponse, error) {
 		Color: note.Color,
 		Count: note.Count,
 	}, nil
+}
+
+func (n *notesRepository) CreateNote(in *notes.NotedCreateRequest) (*notes.NotedCreateResponse, error) {
+
+	id := incrementNoteId()
+
+	note := dto.Note{
+		Id:    uint(id),
+		Name:  in.Name,
+		Color: in.Color,
+		Count: in.Count,
+	}
+
+	bNote := note.Marshal()
+	result, err := rdb.Set(ctx, fmt.Sprintf("%s=%d", noteCode, id), bNote, 0).Result()
+	if err != nil {
+		return nil, err
+	}
+
+	return &notes.NotedCreateResponse{Result: result}, nil
 }

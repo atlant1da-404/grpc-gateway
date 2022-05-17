@@ -22,3 +22,9 @@ func (s *Notes) GetNote(ctx context.Context, in *notes.NotesRequest) (*notes.Not
 	result, err := s.notesService.GetNotes(in.Id)
 	return result, err
 }
+
+func (s *Notes) CreateNote(ctx context.Context, in *notes.NotedCreateRequest) (*notes.NotedCreateResponse, error) {
+
+	result, err := s.notesService.CreateNote(in)
+	return result, err
+}
