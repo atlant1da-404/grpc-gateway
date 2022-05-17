@@ -5,8 +5,8 @@ import (
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"grpc-gateway/config"
-	"grpc-gateway/grpc/gen/notes"
-	"grpc-gateway/pkg/handler"
+	"grpc-gateway/internal/app"
+	"grpc-gateway/pkg/gen/notes"
 	"log"
 	"net"
 	"net/http"
@@ -18,26 +18,22 @@ const (
 
 func main() {
 
-	addressOne, addressTwo := config.LoadSocketConfig()
-	if addressOne == "" && addressTwo == "" {
-		addressOne = "localhost:8080"
-		addressTwo = "localhost:8081"
-	}
+	hosts := config.LoadSocketConfig()
 
 	go func() {
 
 		mux := runtime.NewServeMux()
-		notes.RegisterNotesHandlerServer(context.Background(), mux, handler.NewNotes())
-		log.Fatalln(http.ListenAndServe(addressOne, mux))
+		notes.RegisterNotesHandlerServer(context.Background(), mux, app.NewNotes())
+		log.Fatalln(http.ListenAndServe(hosts[0], mux))
 	}()
 
-	listener, err := net.Listen(method, addressTwo)
+	listener, err := net.Listen(method, hosts[1])
 	if err != nil {
 		log.Fatalln(err.Error())
 	}
 
 	grpcServer := grpc.NewServer()
-	notes.RegisterNotesServer(grpcServer, handler.NewNotes())
+	notes.RegisterNotesServer(grpcServer, app.NewNotes())
 	err = grpcServer.Serve(listener)
 	if err != nil {
 		log.Println(err.Error())
