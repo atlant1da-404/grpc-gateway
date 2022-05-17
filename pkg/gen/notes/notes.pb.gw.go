@@ -149,7 +149,7 @@ func RegisterNotesHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc
 
 // RegisterNotesHandlerClient registers the http handlers for service Notes
 // to "mux". The handlers forward requests to the pkg endpoint over the given implementation of "NotesClient".
-// Note: the gRPC framework executes interceptors within the gRPC app. If the passed in "NotesClient"
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "NotesClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
 // "NotesClient" to call the correct interceptors.
 func RegisterNotesHandlerClient(ctx context.Context, mux *runtime.ServeMux, client NotesClient) error {
