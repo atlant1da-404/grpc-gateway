@@ -28,6 +28,25 @@ message NotedCreateResponse {
   string result = 1;
 }
 
+message NoteUpdateRequest {
+  uint64 id = 1;
+  string name = 2;
+  string color = 3;
+  int32 count = 4;
+}
+
+message NoteUpdateResponse {
+  string result = 1;
+}
+
+message NoteDeleteRequest {
+  uint64 id = 1;
+}
+
+message NoteDeleteResponse {
+  string result = 1;
+}
+
 
 service Notes {
   rpc GetNote(NotesRequest) returns (NotesResponse) {
@@ -40,6 +59,19 @@ service Notes {
     option (google.api.http) = {
       post: "/post"
       body: "*"
+    };
+  }
+
+  rpc UpdateNote(NoteUpdateRequest) returns (NoteUpdateResponse) {
+    option (google.api.http) = {
+      put: "/put/{id}"
+      body: "*"
+    };
+  }
+
+  rpc DeleteNote(NoteDeleteRequest) returns (NoteDeleteResponse) {
+    option (google.api.http) = {
+      delete: "/delete/{id}"
     };
   }
 }
