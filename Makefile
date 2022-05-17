@@ -9,3 +9,7 @@ create:
 
 run:
 	go run server/server.go
+
+# Run redis in docker
+redis:
+	docker run --name rdb -p 6379:6379 redis
