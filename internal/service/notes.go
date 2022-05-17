@@ -1,6 +1,9 @@
 package service
 
-import "grpc-gateway/pkg/gen/notes"
+import (
+	"grpc-gateway/internal/repository"
+	"grpc-gateway/pkg/gen/notes"
+)
 
 type NotesService interface {
 	GetNotes(id uint64) (*notes.NotesResponse, error)
@@ -8,17 +11,17 @@ type NotesService interface {
 
 type notesService struct {
 	NotesService
+	notesRepository repository.NotesRepository
 }
 
 func NewNotesService() *notesService {
-	return &notesService{}
+	return &notesService{
+		notesRepository: repository.NewNotesRepository(),
+	}
 }
 
 func (n *notesService) GetNotes(id uint64) (*notes.NotesResponse, error) {
 
-	return &notes.NotesResponse{
-		Name:  "andrik",
-		Color: "black",
-		Count: 53,
-	}, nil
+	result, err := n.notesRepository.GetNotes(id)
+	return result, err
 }
