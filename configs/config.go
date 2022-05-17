@@ -10,9 +10,12 @@ type apiConfigs struct {
 
 	GrpcHost string
 	GrpcPort string
+
+	DbHost string
+	DbPort string
 }
 
-func API() *apiConfigs {
+func Configs() *apiConfigs {
 
 	return &apiConfigs{
 
@@ -21,5 +24,8 @@ func API() *apiConfigs {
 
 		GrpcHost: os.Getenv("grpcHost"),
 		GrpcPort: os.Getenv("grpcPort"),
+
+		DbHost: os.Getenv("dbHost"),
+		DbPort: os.Getenv("dbPort"),
 	}
 }

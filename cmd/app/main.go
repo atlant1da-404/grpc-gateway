@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/joho/godotenv"
 	"grpc-gateway/configs"
+	"grpc-gateway/internal/repository"
 	"grpc-gateway/server"
 	"log"
 	"os"
@@ -20,7 +21,8 @@ func main() {
 		return
 	}
 
-	cfg := configs.API()
+	cfg := configs.Configs()
+	repository.NewRedis(cfg.DbHost + ":" + cfg.DbPort)
 
 	srv := server.NewServer(cfg.HttpHost+":"+cfg.HttpPort, cfg.GrpcHost+":"+cfg.GrpcPort)
 	go srv.RunAPIServer()
