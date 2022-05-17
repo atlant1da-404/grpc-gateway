@@ -1,8 +1,8 @@
-package handler
+package app
 
 import (
 	"context"
-	"grpc-gateway/grpc/gen/notes"
+	"grpc-gateway/pkg/gen/notes"
 )
 
 type Notes struct {
